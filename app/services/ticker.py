@@ -29,7 +29,7 @@ class TickerService:
             query = query.filter(Ticker.timestamp >= int(filters.date_from.timestamp()))
         if filters.date_to:
             query = query.filter(Ticker.timestamp <= int(filters.date_to.timestamp()))
-        return query.order_by(Ticker.timestamp).all()
+        return query.order_by(desc(Ticker.timestamp)).all()
 
     def get_latest_price(self, ticker_name: str) -> Ticker:
         ticker = (

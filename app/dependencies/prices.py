@@ -1,7 +1,7 @@
 from datetime import datetime
 
 from fastapi import Query, Depends, HTTPException
-from pydantic import ValidationError
+from pydantic import ValidationError, AwareDatetime
 from sqlalchemy.orm import Session
 
 from app.db.session import get_db
@@ -11,8 +11,8 @@ from app.services.ticker import TickerService
 
 def get_price_filters(
     ticker: str = Query(..., description="Currency ticker, e.g. btc_usd"),
-    date_from: datetime | None = Query(None, description="Start of date range"),
-    date_to: datetime | None = Query(None, description="End of date range"),
+    date_from: AwareDatetime | None = Query(None, description="Start of date range"),
+    date_to: AwareDatetime | None = Query(None, description="End of date range"),
 ) -> PriceFilterParams:
     try:
         return PriceFilterParams(ticker=ticker, date_from=date_from, date_to=date_to)

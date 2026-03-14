@@ -14,6 +14,13 @@ services:
       timeout: 5s
       retries: 5
 
+  db_test:
+    image: postgres:16
+    env_file:
+      - .env.test
+    ports:
+      - "5434:5432"
+
   rabbitmq:
     image: rabbitmq:3-management
     restart: always

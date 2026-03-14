@@ -1,4 +1,4 @@
-from pydantic import BaseModel, model_validator
+from pydantic import BaseModel, model_validator, AwareDatetime
 from datetime import datetime
 
 
@@ -6,8 +6,8 @@ class PriceFilterParams(BaseModel):
     model_config = {"arbitrary_types_allowed": True}
 
     ticker: str
-    date_from: datetime | None = None
-    date_to: datetime | None = None
+    date_from: AwareDatetime | None = None
+    date_to: AwareDatetime | None = None
 
     @model_validator(mode="after")
     def validate_date_range(self) -> "PriceFilterParams":
