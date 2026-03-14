@@ -8,6 +8,6 @@ app = FastAPI(
     version="1.0.0",
 )
 
-app.include_router(price_router)
+app.include_router(price_router, prefix="/api/v1")
 
 init_db()
