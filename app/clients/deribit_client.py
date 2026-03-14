@@ -1,35 +1,24 @@
 import asyncio
 import aiohttp
-from app.crud import ticker as ticker_service
-from app.db.session import get_db
 
 
 class DeribitClient:
     BASE_URL = "https://test.deribit.com/api/v2/public"
 
-    def __init__(self):
+    def __init__(self) -> None:
         self.session = None
 
-    async def start(self):
-        self.session = aiohttp.ClientSession()
-
-    async def get_index_price(self, index_name: str) -> None:
+    async def get_index_price(self, index_name: str) -> float:
         url = f"{self.BASE_URL}/get_index_price"
         async with self.session.get(url, params={"index_name": index_name}) as resp:
             data = await resp.json()
-            price = data["result"]["index_price"]
-            self.save_ticker(index_name, price)
-            return price
+            return data["result"]["index_price"]
 
-    def save_ticker(self, name: str, price: float) -> None:
-        gen = get_db()
-        db = next(gen)
-        try:
-            ticker_service.create_ticker(db, name, price)
-        finally:
-            gen.close()
+    async def __aenter__(self) -> "DeribitClient":
+        self.session = aiohttp.ClientSession()
+        return self
 
-    async def close(self):
+    async def __aexit__(self, exc_type, exc_val, exc_tb) -> None:
         await self.session.close()
 
 
