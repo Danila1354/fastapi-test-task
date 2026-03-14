@@ -5,6 +5,7 @@ from sqlalchemy import desc
 from sqlalchemy.orm import Session
 
 from app.models.ticker import Ticker
+from app.schemas.filter import PriceFilterParams
 
 
 class TickerNotFoundError(Exception):
@@ -22,13 +23,13 @@ class TickerService:
         self.db.refresh(ticker)
         return ticker
 
-    def get_all_by_ticker(self, ticker_name: str) -> List[Ticker]:
-        return (
-            self.db.query(Ticker)
-            .filter(Ticker.name == ticker_name)
-            .order_by(Ticker.timestamp)
-            .all()
-        )
+    def get_all(self, filters: PriceFilterParams) -> List[Ticker]:
+        query = self.db.query(Ticker).filter(Ticker.name == filters.ticker)
+        if filters.date_from:
+            query = query.filter(Ticker.timestamp >= int(filters.date_from.timestamp()))
+        if filters.date_to:
+            query = query.filter(Ticker.timestamp <= int(filters.date_to.timestamp()))
+        return query.order_by(Ticker.timestamp).all()
 
     def get_latest_price(self, ticker_name: str) -> Ticker:
         ticker = (

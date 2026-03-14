@@ -20,18 +20,3 @@ class DeribitClient:
 
     async def __aexit__(self, exc_type, exc_val, exc_tb) -> None:
         await self.session.close()
-
-
-async def main():
-    client = DeribitClient()
-    await client.start()
-
-    btc = await client.get_index_price("btc_usd")
-    eth = await client.get_index_price("eth_usd")
-    print("BTC:", btc, "ETH:", eth)
-
-    await client.close()
-
-
-if __name__ == "__main__":
-    asyncio.run(main())
