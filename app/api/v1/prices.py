@@ -20,7 +20,7 @@ router = APIRouter(prefix="/prices", tags=["prices"])
 async def get_prices(
     filters: PriceFilterParams = Depends(get_price_filters),
     service: TickerService = Depends(get_ticker_service),
-):
+) -> List[TickerRead]:
     return service.get_all(filters)
 
 
@@ -33,7 +33,7 @@ async def get_prices(
 async def get_latest_price(
     service: TickerService = Depends(get_ticker_service),
     ticker: str = Query(..., description="Currency ticker, e.g. btc_usd"),
-):
+) -> TickerRead:
     try:
         return service.get_latest_price(ticker)
     except TickerNotFoundError as e:

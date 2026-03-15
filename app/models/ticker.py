@@ -7,6 +7,6 @@ from app.db.base import Base
 class Ticker(Base):
     __tablename__ = "ticker"
     id: Mapped[int] = mapped_column(primary_key=True)
-    name: Mapped[str] = mapped_column(String(10))
+    name: Mapped[str] = mapped_column(String(30), index=True)
     price: Mapped[float] = mapped_column()
-    timestamp: Mapped[int] = mapped_column()
+    timestamp: Mapped[int] = mapped_column(BigInteger, index=True)
