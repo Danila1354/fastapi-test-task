@@ -30,7 +30,7 @@
 
 ```bash
 # 1. Клонировать репозиторий
-git clone https://github.com/Danila1354/fastapi-test-task.git
+git clone https://gitlab.com/Danila1354/fastapi-test-task.git
 cd fastapi-test-task
 
 # 2. Создать .env файл
