@@ -28,18 +28,33 @@
 
 ### Запуск приложения
 
+#### 1. Клонировать репозиторий
+
+##### GitHub
+
 ```bash
-# 1. Клонировать репозиторий
-git clone https://gitlab.com/Danila1354/fastapi-test-task.git
+git clone https://github.com/Danila1354/fastapi-test-task.git
 cd fastapi-test-task
-
-# 2. Создать .env файл
-cp .env.example .env
-
-# 3. Запустить все сервисы
-docker-compose up -d
 ```
 
+##### GitLab
+
+```bash
+git clone https://gitlab.com/Danila1354/fastapi-test-task.git
+cd fastapi-test-task
+```
+
+#### 2. Создать `.env` файл
+
+```bash
+cp .env.example .env
+```
+
+#### 3. Запустить сервисы
+
+```bash
+docker-compose up -d
+```
 После запуска поднимутся следующие сервисы:
 
 | Сервис | URL                          |
